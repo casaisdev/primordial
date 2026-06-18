@@ -2,22 +2,12 @@
 
 A Darwinian artificial-life sim that runs in your browser. Digital organisms are born, eat, flee, hunt, breed, and die — in real time, with no script and no win state. There's a genome, an environment, and selection. Everything else (population cycles, trait drift, specialization, collapse) is emergent. I didn't write any of those behaviors; they fall out of the rules.
 
-<p align="center">
-  <a href="https://primordial.martincasais.com"><img src="media/cover.png" alt="Primordial — a running ecosystem" width="820"></a>
-</p>
 
-<!--
-  MOTION CLIP: GitHub does NOT render <video src="relative/path"> in a README, so the
-  cover above is the static hero and the clip below is a plain link (GitHub plays mp4 in
-  its file viewer). TO EMBED IT INLINE: drag media/sim-demo.mp4 into the GitHub web editor
-  while editing this README — GitHub uploads it and hands back a
-  https://user-images.githubusercontent.com/... URL; paste that URL here as a bare line.
--->
+https://github.com/user-attachments/assets/bc520f92-00b8-4abd-b69d-7bfcc4886053
+
 
 <p align="center">
   <a href="https://primordial.martincasais.com"><b>▶ Live (the real thing, not a recording) → primordial.martincasais.com</b></a>
-  &nbsp;·&nbsp;
-  <a href="media/sim-demo.mp4">24-second clip</a>
 </p>
 
 ---
