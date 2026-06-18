@@ -66,28 +66,28 @@ export default async function OGImage() {
           justifyContent: 'center',
           flex: 1,
           paddingLeft: 100,
-          paddingRight: 560,
+          paddingRight: 360,
         }}
       >
         {/* Dot + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 28, marginBottom: 38 }}>
           <div
             style={{
-              width: 14,
-              height: 14,
+              width: 20,
+              height: 20,
               borderRadius: '50%',
               background: '#00FF88',
-              boxShadow: '0 0 18px rgba(0,255,136,0.8)',
+              boxShadow: '0 0 24px rgba(0,255,136,0.8)',
               flexShrink: 0,
               display: 'flex',
             }}
           />
           <span
             style={{
-              fontSize: 86,
+              fontSize: 106,
               fontWeight: 400,
               color: '#E8E8E8',
-              letterSpacing: '-2.5px',
+              letterSpacing: '-3px',
               lineHeight: 1,
               fontFamily,
             }}
@@ -99,12 +99,12 @@ export default async function OGImage() {
         {/* Tagline */}
         <span
           style={{
-            fontSize: 18,
-            color: 'rgba(232,232,232,0.38)',
+            fontSize: 30,
+            color: 'rgba(232,232,232,0.45)',
             fontFamily,
-            letterSpacing: '0.06em',
-            lineHeight: 1.6,
-            paddingLeft: 34,
+            letterSpacing: '0.04em',
+            lineHeight: 1.55,
+            paddingLeft: 48,
           }}
         >
           Darwinian artificial life simulation.{'\n'}
