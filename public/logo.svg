@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252 44" fill="none" role="img" aria-label="primordial">
+  <!-- Pulse ring -->
+  <circle cx="14" cy="22" r="11" stroke="#00FF88" stroke-width="0.75">
+    <animate attributeName="r" values="9;14;9" dur="2.8s" repeatCount="indefinite" calcMode="ease-in-out"/>
+    <animate attributeName="stroke-opacity" values="0.35;0;0.35" dur="2.8s" repeatCount="indefinite" calcMode="ease-in-out"/>
+  </circle>
+  <!-- Cell body -->
+  <circle cx="14" cy="22" r="5" fill="#00FF88">
+    <animate attributeName="r" values="4.5;5.8;4.5" dur="2.8s" repeatCount="indefinite" calcMode="ease-in-out"/>
+    <animate attributeName="fill-opacity" values="1;0.75;1" dur="2.8s" repeatCount="indefinite" calcMode="ease-in-out"/>
+  </circle>
+  <!-- Wordmark -->
+  <text
+    x="34"
+    y="30"
+    style="font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace; font-size: 22px; font-weight: 400; fill: #E8E8E8; letter-spacing: -0.4px;"
+  >primordial</text>
+</svg>

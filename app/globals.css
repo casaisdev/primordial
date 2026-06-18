@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PRIMORDIAL — design tokens
+   "Living telemetry": a deep-field laboratory instrument where life is the
+   signal. Dark, technical, premium. Saira drives the chassis (labels, chrome);
+   JetBrains Mono carries the signal (metrics, IDs, telemetry).
+   Tailwind utilities and hand-written CSS share these same variables.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Surfaces ── */
+  --void:    #050508;   /* absolute background — the microscope dark */
+  --surface: #07070E;   /* slightly elevated panels */
+
+  /* Recessed fills — instrument wells, from deepest to a hover lift */
+  --fill-0: rgba(0, 0, 0, 0.42);     /* deepest recess — chart / scope wells */
+  --fill-1: rgba(0, 0, 0, 0.22);     /* data cells, cards, sliders */
+  --fill-2: rgba(255, 255, 255, 0.022); /* hover lift */
+
+  /* ── Biological signal ── */
+  --life:   #00FF88;   /* bioluminescent — living organisms only */
+  --depth:  #0055CC;   /* informational — deep water */
+  --fire:   #FF4400;   /* death, energy, danger */
+  --pred:   #DC5028;   /* predator lineage */
+  --violet: #C878FF;   /* age / lineage telemetry */
+
+  /* ── Instrument accents ── */
+  --amber: #FFB020;    /* warning / heat / energy readouts */
+  --cyan:  #00CFFF;    /* cold / data / telemetry */
+
+  /* ── Text hierarchy ── */
+  /* Three steps, each one legible on the --void background: primary copy,
+     secondary labels, and tertiary instrument chrome. Tuned up from earlier,
+     darker values so small tracked labels read cleanly under the vignette. */
+  --ink:    #E6E6EA;   /* primary text */
+  --dim:    rgba(232, 233, 240, 0.64);  /* labels, secondary */
+  --ghost:  rgba(228, 230, 240, 0.50);  /* tertiary, instrument labels */
+
+  /* ── Borders — razor wire, three weights ── */
+  --wire-lo: rgba(255, 255, 255, 0.03);  /* faintest internal division */
+  --wire:    rgba(255, 255, 255, 0.06);  /* default division */
+  --wire-hi: rgba(255, 255, 255, 0.13);  /* hover / focus */
+
+  /* ── Reusable glow primitives (text-shadow blur radius shared) ── */
+  --glow-blur: 10px;
+
+  /* Backward-compatible aliases for utilities already in components */
+  --background: var(--void);
+  --foreground: var(--ink);
+  --primary:    var(--life);
+  --secondary:  var(--depth);
+  --accent:     var(--fire);
+  --muted:      var(--dim);
+  --border:     var(--wire);
+}
+
+/* ── Tailwind theme ── */
+
+/* Fonts + animation tokens.
+   Fonts live in a non-inline @theme so they emit cleanly to :root (no
+   self-reference) and drive font-sans / font-mono utilities. The next/font
+   variables (--font-saira, --font-jetbrains-mono) are set on <html>; the
+   ui-sans-serif / ui-monospace fallbacks guarantee a correct generic family
+   even if the webfont hasn't loaded — never a serif. */
+@theme {
+  --font-sans: var(--font-saira), ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'JetBrains Mono', 'Courier New', monospace;
+
+  --animate-pulse-cell: pulse-cell 2.6s ease-in-out infinite;
+  --animate-blink:      blink 1.6s step-end infinite;
+}
+
+@theme inline {
+  /* Legacy aliases */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary:    var(--primary);
+  --color-secondary:  var(--secondary);
+  --color-accent:     var(--accent);
+  --color-muted:      var(--muted);
+  --color-border:     var(--border);
+
+  /* Surfaces */
+  --color-surface: var(--surface);
+  --color-fill-0:  var(--fill-0);
+  --color-fill-1:  var(--fill-1);
+  --color-fill-2:  var(--fill-2);
+
+  /* Signal + accents */
+  --color-life:   var(--life);
+  --color-depth:  var(--depth);
+  --color-fire:   var(--fire);
+  --color-pred:   var(--pred);
+  --color-violet: var(--violet);
+  --color-amber:  var(--amber);
+  --color-cyan:   var(--cyan);
+
+  /* Text */
+  --color-ink:   var(--ink);
+  --color-dim:   var(--dim);
+  --color-ghost: var(--ghost);
+
+  /* Borders */
+  --color-wire-lo: var(--wire-lo);
+  --color-wire:    var(--wire);
+  --color-wire-hi: var(--wire-hi);
+}
+
+/* ═══════════════ Base resets ═══════════════ */
+
+@layer base {
+  /* No radii on any interactive element — this is an instrument */
+  button, input, select, textarea {
+    border-radius: 0 !important;
+    outline: none;
+    font-family: inherit;
+  }
+
+  /* Keyboard focus must be visible — only on keyboard navigation, not on click,
+     so the instrument aesthetic is preserved for pointer users. */
+  :focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--life) 80%, transparent);
+    outline-offset: 1px;
+  }
+
+  /* Chassis defaults to the technical grotesque; metrics opt into mono */
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tabular figures are always monospaced — alignment is non-negotiable */
+  .tabular-nums {
+    font-family: var(--font-mono);
+    font-feature-settings: 'tnum' 1, 'zero' 1;
+  }
+}
+
+/* ═══════════════ Global atmosphere ═══════════════ */
+
+body {
+  background: var(--void);
+  color:      var(--ink);
+  font-family: var(--font-sans);
+  position: relative;
+}
+
+/* Radial vignette — gives the panel depth, like light pooling under glass */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    130% 110% at 50% 38%,
+    transparent 52%,
+    rgba(0, 0, 0, 0.28) 100%
+  );
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* CRT phosphor scanline overlay — afina, casi imperceptible */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.02) 3px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+  animation: phosphor-drift 9s ease-in-out infinite;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--life) 16%, transparent);
+  color:      var(--ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--life) 16%, transparent) transparent;
+}
+
+/* ═══════════════ Utilities ═══════════════ */
+
+/* Phosphor glow — tokenized, no more inline text-shadows */
+.glow-life   { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--life)   55%, transparent); }
+.glow-amber  { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--amber)  55%, transparent); }
+.glow-fire   { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--fire)   55%, transparent); }
+.glow-cyan   { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--cyan)   55%, transparent); }
+.glow-violet { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--violet) 55%, transparent); }
+.glow-soft   { text-shadow: 0 0 var(--glow-blur) color-mix(in srgb, var(--life)   28%, transparent); }
+
+/* Instrument label — the recurring tracked, uppercase chrome label */
+.lbl {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+
+/* Section-label rule — decorative left tick */
+.section-tick::before {
+  content: '╴';
+  color: color-mix(in srgb, var(--life) 28%, transparent);
+  margin-right: 0.4em;
+}
+
+/* ═══════════════ Animations ═══════════════ */
+
+/* Biological heartbeat — refined: a confident swell, gentle rest. Premium,
+   not arcade. Only fires on living things. */
+@keyframes pulse-cell {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.45), 0 0 5px rgba(0, 255, 136, 0.35);
+  }
+  14% {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 6px rgba(0, 255, 136, 0), 0 0 16px rgba(0, 255, 136, 0.9);
+  }
+  26% {
+    transform: scale(0.94);
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0), 0 0 4px rgba(0, 255, 136, 0.3);
+  }
+  40% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.15), 0 0 6px rgba(0, 255, 136, 0.2);
+  }
+}
+
+/* Binary blink — alive or not, no in-between */
+@keyframes blink {
+  0%, 49%, 100% { opacity: 1; }
+  50%, 99%      { opacity: 0; }
+}
+
+/* Scan line — one pass, slow, relentless */
+@keyframes scan-line {
+  0%   { transform: translateY(0); opacity: 0.6; }
+  2%   { opacity: 1; }
+  98%  { opacity: 1; }
+  100% { transform: translateY(calc(100vh - 96px)); opacity: 0; }
+}
+
+/* Entry — minimal displacement, fast */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ambient phosphor — very slow brightness drift, like a warm CRT tube */
+@keyframes phosphor-drift {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.94; }
+  50% { opacity: 0.97; }
+  55% { opacity: 0.93; }
+  60% { opacity: 1; }
+}
+
+/* ═══════════════ App shell layout ═══════════════ */
+/* Desktop: canvas + side panel, controls/header full width. */
+.sim-grid {
+  display: grid;
+  height: 100dvh;
+  overflow: hidden;
+  grid-template-rows: 44px 1fr 64px;
+  grid-template-columns: minmax(0, 1fr) clamp(340px, 30vw, 420px);
+}
+
+/* Tablet / mobile: stack into a single column so the canvas, stats panel and
+   controls all stay reachable instead of overflowing off-screen. */
+@media (max-width: 860px) {
+  .sim-grid {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    /* minmax(0, …) lets the single column shrink to the viewport instead of
+       stretching to its widest child — without it the instrument panels force
+       horizontal overflow and every row gets clipped off the right edge. */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 44px 56vh auto auto;
+    /* The control bar is pinned to the bottom of the viewport on mobile (see
+       ControlBar) so START + speeds stay in thumb reach. Reserve its height —
+       two 48px tiers plus the safe-area inset — so the stats panel can scroll
+       clear of it instead of ending underneath. */
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Respect the user — kill ambient motion when asked */
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+  .animate-pulse-cell,
+  .animate-blink,
+  [style*="scan-line"],
+  [style*="reveal"] {
+    animation: none !important;
+  }
+}
